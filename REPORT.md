@@ -1,28 +1,58 @@
-# Επίλυση JSSP - Αναφορά Εκτέλεσης
+# JSSP Solver - Project Showcase
 
-**Μάθημα:** Αντικειμενοστραφής Προγραμματισμός (Φθινόπωρο 2025-2026)  
-**Ημερομηνία:** 26 Δεκεμβρίου 2025  
+A C++ application designed to solve the **Job Shop Scheduling Problem (JSSP)** using basic algorithms and providing visual feedback via Gantt charts.
 
-Αυτό το έγγραφο παρέχει μια οπτική παρουσίαση της εφαρμογής επίλυσης του Προβλήματος Προγραμματισμού Εργασιών (JSSP), παρουσιάζοντας τις βασικές λειτουργίες της: φόρτωση προβλήματος, επιλογή αλγορίθμου, οπτικοποίηση λύσης και εξαγωγή δεδομένων.
+## User Interface Overview
 
-## 1. Κύρια Διεπαφή & Επιλογή Προβλήματος
+### 1. Problem Selection
+The application features a clean interface where users can select from pre-defined JSSP problems or load their own.
 
-Η εφαρμογή ξεκινά με μια καθαρή διεπαφή. Η πλαϊνή μπάρα στα αριστερά επιτρέπει στους χρήστες να επιλέξουν παραδείγματα προβλημάτων JSSP από τον κατάλογο `data/`.
+![Main Window](images/image.png)
+*The main dashboard upon startup.*
 
-![Κύρια Διεπαφή](images/main_screen.png)
+![Problem Selection](<images/image copy.png>)
+*Dropdown menu for selecting different problem instances (e.g., 5x5, 8x8, 12x4).*
 
-## 2. Επίλυση και Οπτικοποίηση (Διάγραμμα Gantt)
+---
 
-Μετά την επιλογή ενός προβλήματος (π.χ. `simple_3x3.jssp`) και ενός αλγορίθμου (π.χ. FIFO, SPT ή LPT), η εφαρμογή υπολογίζει το πρόγραμμα και εμφανίζει ένα διαδραστικό διάγραμμα Gantt.
+### 2. Solving the Problem
+Users can choose an algorithm to find an optimal or near-optimal schedule.
 
-- **Κάθετος Άξονας:** Μηχανές (M0, M1, M2...)  
-- **Οριζόντιος Άξονας:** Χρόνος  
-- **Χρώματα:** Κάθε εργασία έχει ένα μοναδικό χρώμα για εύκολη διάκριση.
+![Solving](<images/image copy 2.png>)
+*Selecting an algorithm and executing the solver. The logs show the progress and the calculated Makespan.*
 
-![Οπτικοποίηση Διαγράμματος Gantt](images/ui_gantt_preview_of_import.png)
+---
 
-## 3. Μετρικές Λύσης & Εξαγωγή
+### 3. Visualization & Gantt Charts
+The tool provides an integrated Gantt chart viewer to visualize the machine schedules.
 
-Η εφαρμογή παρέχει λεπτομερείς μετρικές όπως **Makespan**, **Συνολικός Χρόνος Ολοκλήρωσης** και **Μέσος Χρόνος Ροής**. Οι χρήστες μπορούν να εξάγουν τη λύση σε διάφορες μορφές (Κείμενο, JSON, XML) ή να αποθηκεύσουν το διάγραμμα Gantt ως εικόνα.
+![Gantt Preview](<images/image copy 3.png>)
+*Interactive Gantt chart preview showing job distribution across machines over time.*
 
-![Μετρικές και Εξαγωγή](images/export_import.png)
+![Gantt Export](<images/image copy 8.png>)
+*Logs confirming the successful export of the Gantt chart as an image.*
+
+---
+
+### 4. Data Management & Persistence
+Solutions can be exported for later use or imported to verify results.
+
+![Exporting Solution](<images/image copy 4.png>)
+*Exporting the calculated solution to a `.jssp` compatible format.*
+
+![Loading Solution](<images/image copy 5.png>)
+*Using the file explorer to load a previously saved solution.*
+
+![Solution Loaded](<images/image copy 6.png>)
+*Logs confirming that the external solution was successfully parsed and loaded.*
+
+![Direct Preview](<images/image copy 7.png>)
+*Directly visualizing a loaded solution without re-running the solver.*
+
+---
+
+## 🚀 Key Features
+- **Multiple Algorithms:** Support for different JSSP solving strategies.
+- **Real-time Visualization:** Built-in Gantt chart rendering.
+- **Import/Export:** Save solutions to disk and reload them for analysis.
+- **Detailed Logging:** Comprehensive feedback on solver performance and file I/O.
