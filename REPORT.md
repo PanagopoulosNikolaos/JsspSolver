@@ -51,8 +51,3 @@ Solutions can be exported for later use or imported to verify results.
 
 ---
 
-## 🚀 Key Features
-- **Multiple Algorithms:** Support for different JSSP solving strategies.
-- **Real-time Visualization:** Built-in Gantt chart rendering.
-- **Import/Export:** Save solutions to disk and reload them for analysis.
-- **Detailed Logging:** Comprehensive feedback on solver performance and file I/O.
