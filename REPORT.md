@@ -51,3 +51,15 @@ Solutions can be exported for later use or imported to verify results.
 
 ---
 
+### ✒️ Key Features
+- **Real-Time Visualization:** Integrated Gantt chart rendering for immediate feedback.
+- **Import & Export:** Support for loading problem instances and exporting both solutions and charts.
+- **Action Logging:** An integrated console providing real-time logs for every action.
+
+
+### 😔 Down-sides
+- **Fixed Export Locations:** Solutions are saved to `~/Documents/JSSP_SOLUTIONS/` and Gantt charts to `~/Pictures/GANTT_GRAPHS/` without a choice of directory.
+- **Platform Dependency:** The export system currently relies on Linux/macOS home directory structures, which may cause issues on Windows.
+- **Heuristic-Only Solving:** The solver uses basic priority rules (FIFO, SPT, LPT). While fast, they don't always find the most optimal "Makespan" for complex problems.
+- **No In-App Editing:** You cannot modify job or machine data directly in the UI; you have to edit the `.jssp` files manually.
+- **Limited Input Formats:** Only supports the custom `.jssp` file format for loading new problems.

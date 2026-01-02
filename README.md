@@ -2,7 +2,7 @@
 
 This project implements a Job Shop Scheduling Problem (JSSP) solver using modern C++ with object-oriented programming principles. The application provides a graphical user interface for selecting problem instances, running different scheduling algorithms, and visualizing the results with Gantt charts.
 
-## Features
+## Features ✨
 
 - **Problem Loading**: Parse JSSP problem files (.jssp format)
 - **Multiple Algorithms**: FIFO (First In, First Out), SPT (Shortest Processing Time), LPT (Longest Processing Time)
