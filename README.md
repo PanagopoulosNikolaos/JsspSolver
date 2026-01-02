@@ -181,7 +181,8 @@ JSSP_CPP/
 │   └── very_hard_7jobs_3machines.jssp
 ├── images/                        # UI screenshots and assets
 │   ├── export_import.png
-│   └── main_screen.png
+│   ├── main_screen.png
+│   └── ui_gantt_preview_of_import.png
 ├── include/                       # Header files (.hpp)
 │   ├── base_ui.hpp               # Main UI class declaration
 │   ├── gantt_maker.hpp           # Gantt chart visualization
@@ -209,7 +210,6 @@ JSSP_CPP/
 │   ├── test_gantt_maker.cpp     # Gantt maker tests
 │   ├── test_integration.cpp     # Integration tests
 │   ├── test_models.cpp          # Data model tests
-│   ├── test_output.png          # Test output image
 │   ├── test_parser.cpp          # Parser tests
 │   └── test_solver.cpp          # Solver tests
 └── ui/                          # User interface
