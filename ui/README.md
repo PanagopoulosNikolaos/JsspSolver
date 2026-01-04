@@ -122,11 +122,6 @@ The application now uses native system file dialogs for loading exported solutio
 - **Cross-Platform**: Uses system-native file dialogs (Zenity on Linux, native dialogs on Windows/macOS)
 - **User Choice**: Users can select any solution file from any location, eliminating hard-coded paths
 
-### Keyboard Shortcuts
-
-- **Escape**: Close the application
-- **F11**: Toggle fullscreen (if supported)
-- Mouse wheel: Zoom in Gantt chart view
 
 ## Customization
 

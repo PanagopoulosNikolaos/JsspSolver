@@ -52,6 +52,7 @@ if(BUILD_TESTS)
         src/models.cpp
         src/parser.cpp
         src/solver.cpp
+        src/solution_serializer.cpp
         src/gantt_maker.cpp
         ui/base_ui.cpp
     )

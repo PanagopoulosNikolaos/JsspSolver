@@ -1,0 +1,147 @@
+classDiagram
+    %% Main UI Controller
+    class BaseUI {
+        -window: sf::RenderWindow
+        -currentProblem: ProblemInstance*
+        -currentResult: ScheduleResult*
+        -selectedAlgo: SchedulingAlgorithm
+        +run(): void
+        +loadFile(string): void
+        +solve(): void
+        +exportSolutionInteractive(): void
+        +loadSolutionInteractive(): void
+        +exportGanttChartInteractive(): void
+    }
+
+    %% Data Model Classes
+    class ProblemInstance {
+        -jobs: Job[]
+        -machines: Machine[]
+        -numJobs: int
+        -numMachines: int
+        +createJobs(int): void
+        +createMachines(int): void
+        +getJob(int): Job
+        +getMachine(int): Machine
+        +getTotalOperations(): int
+    }
+
+    class Job {
+        -jobId: int
+        -operations: Operation[]
+        +addOperation(Operation): void
+        +getOperation(int): Operation
+        +getOperationCount(): int
+    }
+
+    class Machine {
+        -machineId: int
+        -scheduledOperations: Operation[]
+        -availableTime: int
+        +scheduleOperation(Operation, int): void
+        +reset(): void
+        +isAvailable(): bool
+    }
+
+    class Operation {
+        -jobId: int
+        -machineId: int
+        -processingTime: int
+        -operationId: int
+        -startTime: int
+        -endTime: int
+        +getDuration(): int
+        +setScheduled(int, int): void
+        +isScheduled(): bool
+    }
+
+    class ScheduleResult {
+        -problem: ProblemInstance
+        -makespan: int
+        -totalCompletionTime: int
+        -avgFlowTime: double
+        +calculateMetrics(): void
+    }
+
+    %% Core Processing Classes
+    class Parser {
+        <<static>>
+        +parseFile(string): ProblemInstance*
+        +parseString(string): ProblemInstance*
+        +loadSolution(string): ScheduleResult*
+        +saveToFile(ProblemInstance*, string): void
+        +generateSimpleProblem(): ProblemInstance*
+    }
+
+    class Solver {
+        -algorithm: SchedulingAlgorithm
+        +setAlgorithm(SchedulingAlgorithm): void
+        +solve(ProblemInstance*): ScheduleResult*
+        +getCurrentAlgorithmName(): string
+    }
+
+    class GanttChartMaker {
+        -window: sf::RenderWindow
+        -font: sf::Font
+        +displaySchedule(ScheduleResult*): void
+        +saveToFile(ScheduleResult*, string): void
+        +setWindowSize(uint, uint): void
+        +isOpen(): bool
+        +close(): void
+    }
+
+    class SolutionSerializer {
+        <<static>>
+        +exportSolution(ScheduleResult*, string, ExportFormat): void
+        +exportText(ScheduleResult*, string): void
+        +exportJSON(ScheduleResult*, string): void
+        +exportXML(ScheduleResult*, string): void
+    }
+
+    %% Enums
+    class SchedulingAlgorithm {
+        <<enumeration>>
+        FIFO
+        SPT
+        LPT
+    }
+
+    class ExportFormat {
+        <<enumeration>>
+        TEXT
+        JSON
+        XML
+    }
+
+    class ViewMode {
+        <<enumeration>>
+        Output
+        GanttChart
+    }
+
+    %% Relationships
+    BaseUI --> ProblemInstance : manages
+    BaseUI --> ScheduleResult : manages
+    BaseUI --> Parser : uses
+    BaseUI --> Solver : uses
+    BaseUI --> GanttChartMaker : uses
+    BaseUI --> SolutionSerializer : uses
+    BaseUI ..> SchedulingAlgorithm : uses
+    BaseUI ..> ViewMode : uses
+
+    ProblemInstance --> Job : contains
+    ProblemInstance --> Machine : contains
+    ScheduleResult --> ProblemInstance : embeds
+
+    Job --> Operation : contains
+    Machine --> Operation : schedules
+
+    Solver --> ProblemInstance : takes as input
+    Solver --> ScheduleResult : produces
+    Solver ..> SchedulingAlgorithm : uses
+
+    GanttChartMaker --> ScheduleResult : visualizes
+    Parser --> ProblemInstance : creates
+    Parser --> ScheduleResult : loads
+
+    SolutionSerializer --> ScheduleResult : serializes

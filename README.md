@@ -14,207 +14,66 @@ This project implements a Job Shop Scheduling Problem (JSSP) solver using modern
 
 ## Class Architecture
 
-```mermaid
-classDiagram
-    %% Main UI Controller
-    class BaseUI {
-        -window: sf::RenderWindow
-        -currentProblem: ProblemInstance*
-        -currentResult: ScheduleResult*
-        -selectedAlgo: SchedulingAlgorithm
-        +run(): void
-        +loadFile(string): void
-        +solve(): void
-        +exportSolutionInteractive(): void
-        +loadSolutionInteractive(): void
-        +exportGanttChartInteractive(): void
-    }
+![alt text](images/diagram.png)
 
-    %% Data Model Classes
-    class ProblemInstance {
-        -jobs: Job[]
-        -machines: Machine[]
-        -numJobs: int
-        -numMachines: int
-        +createJobs(int): void
-        +createMachines(int): void
-        +getJob(int): Job
-        +getMachine(int): Machine
-        +getTotalOperations(): int
-    }
 
-    class Job {
-        -jobId: int
-        -operations: Operation[]
-        +addOperation(Operation): void
-        +getOperation(int): Operation
-        +getOperationCount(): int
-    }
-
-    class Machine {
-        -machineId: int
-        -scheduledOperations: Operation[]
-        -availableTime: int
-        +scheduleOperation(Operation, int): void
-        +reset(): void
-        +isAvailable(): bool
-    }
-
-    class Operation {
-        -jobId: int
-        -machineId: int
-        -processingTime: int
-        -operationId: int
-        -startTime: int
-        -endTime: int
-        +getDuration(): int
-        +setScheduled(int, int): void
-        +isScheduled(): bool
-    }
-
-    class ScheduleResult {
-        -problem: ProblemInstance
-        -makespan: int
-        -totalCompletionTime: int
-        -avgFlowTime: double
-        +calculateMetrics(): void
-    }
-
-    %% Core Processing Classes
-    class Parser {
-        <<static>>
-        +parseFile(string): ProblemInstance*
-        +parseString(string): ProblemInstance*
-        +loadSolution(string): ScheduleResult*
-        +saveToFile(ProblemInstance*, string): void
-        +generateSimpleProblem(): ProblemInstance*
-    }
-
-    class Solver {
-        -algorithm: SchedulingAlgorithm
-        +setAlgorithm(SchedulingAlgorithm): void
-        +solve(ProblemInstance*): ScheduleResult*
-        +getCurrentAlgorithmName(): string
-    }
-
-    class GanttChartMaker {
-        -window: sf::RenderWindow
-        -font: sf::Font
-        +displaySchedule(ScheduleResult*): void
-        +saveToFile(ScheduleResult*, string): void
-        +setWindowSize(uint, uint): void
-        +isOpen(): bool
-        +close(): void
-    }
-
-    class SolutionSerializer {
-        <<static>>
-        +exportSolution(ScheduleResult*, string, ExportFormat): void
-        +exportText(ScheduleResult*, string): void
-        +exportJSON(ScheduleResult*, string): void
-        +exportXML(ScheduleResult*, string): void
-    }
-
-    %% Enums
-    class SchedulingAlgorithm {
-        <<enumeration>>
-        FIFO
-        SPT
-        LPT
-    }
-
-    class ExportFormat {
-        <<enumeration>>
-        TEXT
-        JSON
-        XML
-    }
-
-    class ViewMode {
-        <<enumeration>>
-        Output
-        GanttChart
-    }
-
-    %% Relationships
-    BaseUI --> ProblemInstance : manages
-    BaseUI --> ScheduleResult : manages
-    BaseUI --> Parser : uses
-    BaseUI --> Solver : uses
-    BaseUI --> GanttChartMaker : uses
-    BaseUI --> SolutionSerializer : uses
-    BaseUI ..> SchedulingAlgorithm : uses
-    BaseUI ..> ViewMode : uses
-
-    ProblemInstance --> Job : contains
-    ProblemInstance --> Machine : contains
-    ScheduleResult --> ProblemInstance : embeds
-
-    Job --> Operation : contains
-    Machine --> Operation : schedules
-
-    Solver --> ProblemInstance : takes as input
-    Solver --> ScheduleResult : produces
-    Solver ..> SchedulingAlgorithm : uses
-
-    GanttChartMaker --> ScheduleResult : visualizes
-    Parser --> ProblemInstance : creates
-    Parser --> ScheduleResult : loads
-
-    SolutionSerializer --> ScheduleResult : serializes
-
-```
 ## Project Structure
 
 ```
-JSSP_CPP/
-├── CMakeLists.txt                 # Main CMake build configuration
-├── LICENSE                        # MIT License file
-├── README.md                      # This file
-├── REPORT.md                      # Project report/documentation
-├── data/                          # Sample JSSP problem instances
-│   ├── challenging_12jobs_4machines.jssp
+JsspSolver/
+├── CMakeLists.txt
+├── data
+│   ├── challenging_12x4.jssp
 │   ├── complex_8x8.jssp
-│   ├── hard_10jobs_5machines.jssp
+│   ├── hard_10x5.jssp
+│   ├── hard_7x3.jssp
 │   ├── medium_5x5.jssp
-│   ├── simple_3x3.jssp
-│   └── very_hard_7jobs_3machines.jssp
-├── images/                        # UI screenshots and assets
-│   ├── export_import.png
-│   ├── main_screen.png
-│   └── ui_gantt_preview_of_import.png
-├── include/                       # Header files (.hpp)
-│   ├── base_ui.hpp               # Main UI class declaration
-│   ├── gantt_maker.hpp           # Gantt chart visualization
-│   ├── models.hpp                # Core data structures
-│   ├── parser.hpp                # File parsing utilities
-│   ├── README.md                 # Headers documentation
-│   ├── solution_serializer.hpp   # Export functionality
-│   └── solver.hpp                # Scheduling algorithms
-├── src/                          # Implementation files (.cpp)
-│   ├── gantt_maker.cpp          # Gantt chart implementation
-│   ├── main.cpp                 # Application entry point
-│   ├── models.cpp               # Data structures implementation
-│   ├── parser.cpp               # File parsing implementation
-│   ├── README.md                # Source files documentation
-│   ├── solution_serializer.cpp  # Export implementation
-│   └── solver.cpp               # Algorithm implementations
-├── tests/                        # Test suite
-│   ├── CMakeLists.txt           # Test build configuration
-│   ├── README.md                # Test documentation
-│   ├── run_tests.sh             # Test runner script
-│   ├── test_data/               # Test problem instances
-│   │   ├── invalid_test.jssp
-│   │   ├── medium_test.jssp
-│   │   └── simple_test.jssp
-│   ├── test_gantt_maker.cpp     # Gantt maker tests
-│   ├── test_integration.cpp     # Integration tests
-│   ├── test_models.cpp          # Data model tests
-│   ├── test_parser.cpp          # Parser tests
-│   └── test_solver.cpp          # Solver tests
-└── ui/                          # User interface
-    ├── base_ui.cpp              # Main UI implementation
-    └── README.md                # UI documentation
+│   └── simple_3x3.jssp
+├── diagram.mmd
+├── images
+│   ├── diagram.png
+│   ├── image copy 2.png
+│   ├── image copy 3.png
+│   ├── image copy 4.png
+│   ├── image copy 5.png
+│   ├── image copy 6.png
+│   ├── image copy 7.png
+│   ├── image copy 8.png
+│   ├── image copy.png
+│   └── image.png
+├── include
+│   ├── base_ui.hpp
+│   ├── gantt_maker.hpp
+│   ├── main.hpp
+│   ├── models.hpp
+│   ├── parser.hpp
+│   ├── README.md
+│   ├── solution_serializer.hpp
+│   └── solver.hpp
+├── LICENSE
+├── README.md
+├── REPORT.md
+├── src
+│   ├── gantt_maker.cpp
+│   ├── main.cpp
+│   ├── models.cpp
+│   ├── parser.cpp
+│   ├── README.md
+│   ├── solution_serializer.cpp
+│   └── solver.cpp
+├── tests
+│   ├── build
+│   ├── CMakeLists.txt
+│   ├── README.md
+│   ├── run_tests.sh
+│   ├── test_gantt_maker.cpp
+│   ├── test_integration.cpp
+│   ├── test_models.cpp
+│   ├── test_parser.cpp
+│   └── test_solver.cpp
+└── ui
+    ├── base_ui.cpp
+    └── README.md
 ```
 
 ### Architecture Overview
@@ -322,38 +181,22 @@ After building, run the application:
 
 To build and run the test suite:
 
-### Option 1: Using the test runner script
+### Using the test runner script (Recommended)
 ```bash
 cd tests
 chmod +x run_tests.sh
 ./run_tests.sh
 ```
 
-### Option 2: Manual build with tests enabled
-```bash
-mkdir build
-cd build
-cmake .. -DBUILD_TESTS=ON
-make
-ctest --output-on-failure
-```
-
-### Option 3: Run test executable directly
-```bash
-./JSSPTests
-```
-
-### Quick Test Run (One-liner)
-```bash
-mkdir -p build && cd build && cmake .. -DBUILD_TESTS=ON && make && ./JSSPTests
-```
-
 ## Sample Problem Files
 
 The `data/` directory contains sample JSSP instances:
-- `simple_3x3.jssp` - Basic 3 jobs, 3 machines problem
-- `medium_5x5.jssp` - Medium complexity problem
-- `complex_8x8.jssp` - Larger problem for testing
+- **simple_3x3.jssp**
+- **medium_5x5.jssp**
+- **hard_7x3.jssp**
+- **hard_10x5.jssp**
+- **complex_8x8.jssp**
+- **challenging_12x4.jssp**
 
 ## File Formats
 

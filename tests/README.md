@@ -14,12 +14,6 @@ The test suite is organized into the following categories:
 - **`test_gantt_maker.cpp`** - Tests for visualization components
 - **`test_integration.cpp`** - End-to-end workflow tests
 
-### 2. Test Data (`test_data/`)
-
-- **`simple_test.jssp`** - Simple 3x3 problem for basic testing
-- **`medium_test.jssp`** - Medium 4x3 problem for more complex scenarios
-- **`invalid_test.jssp`** - File with invalid data for error handling tests
-
 ## Architecture Integration
 
 The tests validate the separation of interface and implementation in our traditional C++ library structure:
@@ -34,59 +28,13 @@ This separation allows for:
 - **Easier mocking** - Interfaces can be easily mocked for unit testing
 - **Library testing** - Headers can be tested independently of implementations
 
-### 2. Test Data (`test_data/`)
-
-- **`simple_test.jssp`** - Simple 3x3 problem for basic testing
-- **`medium_test.jssp`** - Medium 4x3 problem for more complex scenarios
-- **`invalid_test.jssp`** - File with invalid data for error handling tests
-
 ## Running Tests
 
-### Prerequisites
-
-Install Google Test (gtest) and SFML development libraries:
-
+### Using the test runner script (Recommended)
 ```bash
-# Ubuntu/Debian
-sudo apt-get install libgtest-dev libsfml-dev
-
-# Build gtest
-cd /usr/src/gtest
-sudo cmake CMakeLists.txt
-sudo make
-sudo cp *.a /usr/lib
-
-# CentOS/RHEL/Fedora
-sudo yum install gtest-devel sfml-devel
-# or
-sudo dnf install gtest-devel sfml-devel
+chmod +x run_tests.sh
+./run_tests.sh
 ```
-
-### Build and Run Tests
-
-1. **Configure with tests enabled:**
-   ```bash
-   mkdir build
-   cd build
-   cmake .. -DBUILD_TESTS=ON
-   ```
-
-2. **Build the project:**
-   ```bash
-   make
-   ```
-
-3. **Run all tests:**
-   ```bash
-   # Option 1: Using CTest
-   ctest
-   
-   # Option 2: Using the convenience target
-   make check
-   
-   # Option 3: Run test executable directly
-   ./JSSPTests
-   ```
 
 ### Test Categories
 
@@ -134,13 +82,13 @@ The tests cover the following areas:
 
 The test suite provides comprehensive coverage of:
 
-- ✅ All core data structures and their methods
-- ✅ File parsing with various edge cases
-- ✅ All scheduling algorithms and their behavior
-- ✅ Error handling and validation
-- ✅ Integration between components
-- ✅ Performance characteristics
-- ✅ Memory management with smart pointers
+- ✔️ All core data structures and their methods
+- ✔️ File parsing with various edge cases
+- ✔️ All scheduling algorithms and their behavior
+- ✔️ Error handling and validation
+- ✔️ Integration between components
+- ✔️ Performance characteristics
+- ✔️ Memory management with smart pointers
 
 ## Writing New Tests
 
@@ -185,22 +133,10 @@ The tests are designed to be run in CI/CD environments. They:
 
 ### Common Issues
 
-1. **gtest not found**: Ensure gtest is installed and the development headers are available
-2. **SFML not found**: Install SFML development libraries
-3. **Tests failing**: Check that the main project builds successfully first
-4. **Memory leaks**: The tests use smart pointers, but check for circular references
-
-### Debugging Tests
-
-Run tests with verbose output:
-```bash
-./JSSPTests --gtest_verbose
-```
-
-Run specific test suites:
-```bash
-./JSSPTests --gtest_filter="ModelsTest.*"
-```
+1. **Script not executable**: Make sure to run `chmod +x run_tests.sh` first
+2. **Dependencies missing**: The script will check for required dependencies
+3. **Tests failing**: Check the script output for detailed error messages
+4. **Permission issues**: Ensure you have write permissions in the tests directory
 
 ## Performance Notes
 
