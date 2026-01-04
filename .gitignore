@@ -43,3 +43,24 @@
 
 # Build folders
 **/build/
+
+# IDE Folders
+**/.vscode/
+**/.zed/
+**/.eclipse/
+**/.settings/
+**/.project
+**/.classpath
+**/.idea/
+**/.atom/
+**/.sublime/
+**/.vim/
+**/.emacs.d/
+
+
+# Editor temporary files
+*~
+*.swp
+*.swo
+#*#
+.#*
