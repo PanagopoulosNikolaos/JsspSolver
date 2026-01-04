@@ -111,25 +111,25 @@ ui/
 #### Ubuntu/Debian
 ```bash
 sudo apt-get update
-sudo apt-get install build-essential cmake libsfml-dev nlohmann-json3-dev
+sudo apt-get install build-essential cmake libsfml-dev nlohmann-json3-dev libgtest-dev googletest
 ```
 
 #### CentOS/RHEL/Fedora
 ```bash
-sudo yum install gcc-c++ cmake sfml-devel json-devel
+sudo yum install gcc-c++ cmake sfml-devel json-devel gtest-devel
 # or for newer versions:
-sudo dnf install gcc-c++ cmake sfml-devel json-devel
+sudo dnf install gcc-c++ cmake SFML-devel nlohmann-json-devel gtest-devel
 ```
 
 #### macOS (using Homebrew)
 ```bash
-brew install cmake sfml nlohmann-json
+brew install cmake sfml nlohmann-json googletest
 ```
 
 #### Windows
 Use vcpkg or similar package manager:
 ```bash
-vcpkg install sfml nlohmann-json
+vcpkg install sfml:x64-windows nlohmann-json:x64-windows gtest:x64-windows
 ```
 
 ## Building the Project
